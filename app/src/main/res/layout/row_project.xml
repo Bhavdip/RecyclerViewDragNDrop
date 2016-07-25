@@ -2,20 +2,23 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    android:layout_width="80dp"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    card_view:cardCornerRadius="8dp"
+    android:layout_width="wrap_content"
+    android:layout_height="200dp"
+    android:layout_marginBottom="8dp"
+    card_view:cardCornerRadius="4dp"
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/portfolioPhoto"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true" />
 
         <TextView
             android:id="@+id/projectName"

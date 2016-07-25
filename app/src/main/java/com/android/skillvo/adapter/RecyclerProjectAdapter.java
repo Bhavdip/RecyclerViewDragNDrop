@@ -19,6 +19,7 @@ import com.android.skillvo.model.Portfolio;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecyclerProjectAdapter extends RecyclerView.Adapter<RecyclerProjectAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
@@ -63,12 +64,15 @@ public class RecyclerProjectAdapter extends RecyclerView.Adapter<RecyclerProject
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-        return false;
+        Collections.swap(portfolioList, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
     }
 
     @Override
     public void onItemDismiss(int position) {
-
+        portfolioList.remove(position);
+        notifyItemRemoved(position);
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
@@ -84,12 +88,12 @@ public class RecyclerProjectAdapter extends RecyclerView.Adapter<RecyclerProject
 
         @Override
         public void onItemSelected() {
-            itemView.setBackgroundColor(Color.LTGRAY);
+            //itemView.setBackgroundColor(Color.LTGRAY);
         }
 
         @Override
         public void onItemClear() {
-            itemView.setBackgroundColor(0);
+            //itemView.setBackgroundColor(0);
         }
     }
 }

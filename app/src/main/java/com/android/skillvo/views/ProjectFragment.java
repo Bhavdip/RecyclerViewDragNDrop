@@ -79,6 +79,6 @@ public class ProjectFragment extends Fragment implements ProjectViewModel.Projec
 
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-
+        mItemTouchHelper.startDrag(viewHolder);
     }
 }
