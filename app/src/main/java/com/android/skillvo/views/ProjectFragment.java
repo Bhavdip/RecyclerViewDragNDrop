@@ -18,6 +18,7 @@ import com.android.skillvo.helper.OnStartDragListener;
 import com.android.skillvo.helper.SimpleItemTouchHelperCallback;
 import com.android.skillvo.model.PagedList;
 import com.android.skillvo.utils.DialogUtils;
+import com.android.skillvo.utils.ItemOffsetDecoration;
 import com.android.skillvo.viewmodel.ProjectViewModel;
 
 import java.util.List;
@@ -58,6 +59,8 @@ public class ProjectFragment extends Fragment implements ProjectViewModel.Projec
 
         final int spanCount = 2;
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+        ItemOffsetDecoration itemOffsetDecoration = new ItemOffsetDecoration(getActivity(), R.dimen.item_offset);
+        projectDataBinding.projectList.addItemDecoration(itemOffsetDecoration);
         projectDataBinding.projectList.setLayoutManager(layoutManager);
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mRecyclerProjectAdapter);
