@@ -25,6 +25,7 @@ import java.util.List;
 public class RecyclerProjectAdapter extends RecyclerView.Adapter<RecyclerProjectAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
     private List<Portfolio> portfolioList = new ArrayList<>();
     private final OnStartDragListener mDragStartListener;
+    private boolean isDragNDropEnable = false;
 
     public RecyclerProjectAdapter(OnStartDragListener dragStartListener) {
         this.mDragStartListener = dragStartListener;
@@ -45,12 +46,21 @@ public class RecyclerProjectAdapter extends RecyclerView.Adapter<RecyclerProject
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         holder.projectTitle.setText(portfolioList.get(position).getProject().getTitle());
         Picasso.with(holder.projectImageView.getContext()).load(portfolioList.get(position).getUrl()).into(holder.projectImageView);
+        holder.projectImageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                isDragNDropEnable = true;
+                return true;
+            }
+        });
         // Start a drag whenever the handle view it touched
         holder.projectImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (MotionEventCompat.getActionMasked(motionEvent) == MotionEvent.ACTION_DOWN) {
-                    mDragStartListener.onStartDrag(holder);
+                if (isDragNDropEnable) {
+                    if (MotionEventCompat.getActionMasked(motionEvent) == MotionEvent.ACTION_DOWN) {
+                        mDragStartListener.onStartDrag(holder);
+                    }
                 }
                 return false;
             }
@@ -66,11 +76,13 @@ public class RecyclerProjectAdapter extends RecyclerView.Adapter<RecyclerProject
     public boolean onItemMove(int fromPosition, int toPosition) {
         Collections.swap(portfolioList, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
+        isDragNDropEnable = false;
         return true;
     }
 
     @Override
     public void onItemDismiss(int position) {
+        isDragNDropEnable = false;
         portfolioList.remove(position);
         notifyItemRemoved(position);
     }
